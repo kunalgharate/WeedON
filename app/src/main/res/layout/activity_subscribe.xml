@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/darkColor">
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/bg_card" />
+
+    <TextView
+        android:id="@+id/display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="Display Name"
+        android:textColor="@color/colorBtnBgWhite"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/desc_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:text="Description"
+        android:textColor="@color/colorBtnBgWhite"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/total_subscribers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button_subscribe"
+        android:layout_alignEnd="@+id/display_name"
+        android:layout_alignRight="@+id/display_name"
+        android:layout_marginBottom="56dp"
+        android:text="Total Subscribers"
+        android:textColor="@color/colorBtnBgWhite" />
+
+    <Button
+        android:id="@+id/button_subscribe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Subscribe"
+        android:textColor="@color/colorBtnBgWhite" />
+
+</RelativeLayout>
