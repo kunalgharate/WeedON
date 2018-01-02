@@ -7,7 +7,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
@@ -20,7 +19,7 @@ public class WeedOn extends Application {
 
     FirebaseAuth mAuth;
     DatabaseReference mServicesDatabase;
-
+    DatabaseReference ChatDatabaseRef;
 
 
     @Override
@@ -47,6 +46,8 @@ public class WeedOn extends Application {
 
             mServicesDatabase = FirebaseDatabase.getInstance()
                     .getReference().child("all_services").child(mAuth.getCurrentUser().getUid());
+            ChatDatabaseRef = FirebaseDatabase.getInstance().getReference().child("chat");
+
 
             mServicesDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -54,7 +55,7 @@ public class WeedOn extends Application {
 
                     if (dataSnapshot != null) {
 
-                        mServicesDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
+                        // mServicesDatabase.child("online").onDisconnect().setValue(ServerValue.TIMESTAMP);
 
                     }
 

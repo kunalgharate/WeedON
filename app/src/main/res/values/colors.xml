@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryDark">#FF6F00</color>
-    <color name="colorAccent">#333333</color>
+    <color name="colorPrimary">#ffa000</color>
+    <color name="colorPrimaryDark">#c67100</color>
+    <color name="colorAccent">#ffd149</color>
     <!--<color name="colorAccent">#52acf7</color>-->
 
     <color name="colorBackground">#ececec</color>
@@ -10,22 +10,22 @@
     <color name="colorBackgroundLightBlue">#eeeeee</color>
     <color name="colorBackgroundGS">#fcf8e3</color>
 
-    <color name="colorInvoiceStatusInProgress">#cce5ff</color>
+    <color name="colorInvoiceStatusInProgress">#94bbe4</color>
     <color name="colorInvoiceStatusPaid">#c6ecc6</color>
     <color name="colorInvoiceStatusUnPaid">#ffcccc</color>
     <color name="colorInvoiceStatusError">#fff0b3</color>
-
+    <color name="transparent">#00000000</color>
     <color name="colorText">#007dff</color>
     <color name="colorTextSolidText">#555555</color>
     <!-- buttons e.g. save, cancel button -->
     <color name="colorBtnText">#333333</color>
     <color name="colorBtnBoarderGrey">#cccccc</color>
-    <color name="colorBtnBgWhite">#ffffff</color>
+    <color name="colorBtnBgWhite">#ea2222</color>
     <color name="colorBtnBoarderHover">#adadad</color>
     <color name="colorBtnBgGrey">#adadad</color>
     <color name="colorTextHeaderGS">#8a6d3b</color>
 
     <color name="colorSignature">#0E355E</color>
-    <color name="darkColor">#b9181718</color>
+    <color name="darkColor">#b91a8137</color>
 
 </resources>

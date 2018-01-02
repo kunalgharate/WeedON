@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -31,7 +29,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,59 +46,63 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
     private static final int STATE_VERIFY_SUCCESS = 4;
     private static final int STATE_SIGNIN_FAILED = 5;
     private static final int STATE_SIGNIN_SUCCESS = 6;
-
+    private static final int STATE_WRONG_NO = 7;
+    ProgressBar progressBar;
     // [START declare_auth]
     private FirebaseAuth mAuth;
     // [END declare_auth]
-
+    private DatabaseReference mDatabaseRoot;
     private boolean mVerificationInProgress = false;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-
     private ViewGroup mPhoneNumberViews;
     private ViewGroup mSignedInViews;
-
     private TextView mStatusText;
     private TextView mDetailText;
-
     private EditText mPhoneNumberField;
     private EditText mVerificationField;
-
+    private EditText mCountryCode;
     private Button mStartButton;
     private Button mVerifyButton;
     private Button mResendButton;
     private Button mSignOutButton;
 
-    ProgressBar progressBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.login_page_toolbar);
+
+
+        mDatabaseRoot = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference contryDB = mDatabaseRoot.child("country");
+        Toolbar toolbar = findViewById(R.id.login_page_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("New user");
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        progressBar = findViewById(R.id.progressBar);
 
         // Assign views
-        mPhoneNumberViews = (ViewGroup) findViewById(R.id.phone_auth_fields);
-        mSignedInViews = (ViewGroup) findViewById(R.id.signed_in_buttons);
+        mPhoneNumberViews = findViewById(R.id.phone_auth_fields);
+        mSignedInViews = findViewById(R.id.signed_in_buttons);
 
-        mStatusText = (TextView) findViewById(R.id.status);
-        mDetailText = (TextView) findViewById(R.id.detail);
+        mStatusText = findViewById(R.id.status);
+        mDetailText = findViewById(R.id.detail);
 
-        mPhoneNumberField = (EditText) findViewById(R.id.field_phone_number);
-        mVerificationField = (EditText) findViewById(R.id.field_verification_code);
+        mPhoneNumberField = findViewById(R.id.field_phone_number);
+        mVerificationField = findViewById(R.id.field_verification_code);
+        mCountryCode = findViewById(R.id.country_code);
+        mPhoneNumberField.requestFocus();
+        mCountryCode.setText(GetCountryZipCode());
 
-        mStartButton = (Button) findViewById(R.id.button_start_verification);
-        mVerifyButton = (Button) findViewById(R.id.button_verify_phone);
-        mResendButton = (Button) findViewById(R.id.button_resend);
-        mSignOutButton = (Button) findViewById(R.id.sign_out_button);
+        mStartButton = findViewById(R.id.button_start_verification);
+        mVerifyButton = findViewById(R.id.button_verify_phone);
+        mResendButton = findViewById(R.id.button_resend);
+        mSignOutButton = findViewById(R.id.sign_out_button);
 
         // Assign click listeners
         mStartButton.setOnClickListener(this);
@@ -182,6 +185,15 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
             }
         };
         // [END phone_auth_callbacks]
+
+
+        // Country Spinner added
+
+        // Spinner spinner = findViewById(R.id.spinner);
+
+
+
+
     }
 
     // [START on_start_check_user]
@@ -328,6 +340,15 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
                 mDetailText.setTextColor(Color.parseColor("#dd2c00"));
                 progressBar.setVisibility(View.INVISIBLE);
                 break;
+
+            case STATE_WRONG_NO:
+                // Verification has failed, show all options
+                enableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
+                        mVerificationField);
+                // mDetailText.setText(R.string.status_verification_failed);
+                // mDetailText.setTextColor(Color.parseColor("#dd2c00"));
+                // progressBar.setVisibility(View.INVISIBLE);
+                break;
             case STATE_VERIFY_SUCCESS:
                 // Verification has succeeded, proceed to firebase sign in
                 disableViews(mStartButton, mVerifyButton, mResendButton, mPhoneNumberField,
@@ -364,7 +385,7 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
             mPhoneNumberViews.setVisibility(View.VISIBLE);
             mSignedInViews.setVisibility(View.GONE);
 
-            mStatusText.setText(R.string.signed_out);;
+            mStatusText.setText(R.string.signed_out);
         } else {
             // Signed in
             mPhoneNumberViews.setVisibility(View.GONE);
@@ -426,7 +447,7 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
 
                 //mStatusText.setText("Authenticating....!");
                 progressBar.setVisibility(View.VISIBLE);
-                startPhoneNumberVerification(mPhoneNumberField.getText().toString());
+                startPhoneNumberVerification(mCountryCode.getText().toString() + mPhoneNumberField.getText().toString());
 
                 break;
             case R.id.button_verify_phone:
@@ -439,7 +460,7 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
             case R.id.button_resend:
-                resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
+                resendVerificationCode(mCountryCode.getText().toString() + mPhoneNumberField.getText().toString(), mResendToken);
                 break;
             case R.id.sign_out_button:
                 signOut();
@@ -450,7 +471,7 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
 
 
 
-    @Override
+ /*   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.login_menu, menu);
@@ -470,5 +491,24 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
         }
 
         return super.onOptionsItemSelected(item);
+    }
+*/
+
+    public String GetCountryZipCode() {
+        String CountryID = "";
+        String CountryZipCode = "";
+
+        TelephonyManager manager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        //getNetworkCountryIso
+        CountryID = manager.getSimCountryIso().toUpperCase();
+        String[] rl = this.getResources().getStringArray(R.array.CountryCodes);
+        for (int i = 0; i < rl.length; i++) {
+            String[] g = rl[i].split(",");
+            if (g[1].trim().equals(CountryID.trim())) {
+                CountryZipCode = g[0];
+                break;
+            }
+        }
+        return CountryZipCode;
     }
 }

@@ -1,13 +1,13 @@
 package com.example.kunalgharate.weedon;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    public static final int SPLASH_TIME_OUT = 500;
+    public static final int SPLASH_TIME_OUT = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

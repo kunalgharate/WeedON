@@ -2,20 +2,17 @@ package com.example.kunalgharate.weedon;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.kunalgharate.weedon.Model.ServicePojo;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -39,7 +36,7 @@ public class AllServicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_services);
 
-        mToolbar = (Toolbar) findViewById(R.id.allservices_toolbar);
+        mToolbar = findViewById(R.id.allservices_toolbar);
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setTitle("All Services");
@@ -54,7 +51,7 @@ public class AllServicesActivity extends AppCompatActivity {
 
         gridLayoutManager = new GridLayoutManager(this,3);
 
-        mServicesList = (RecyclerView) findViewById(R.id.allservices_list);
+        mServicesList = findViewById(R.id.allservices_list);
         mServicesList.setHasFixedSize(true);
         mServicesList.setLayoutManager(gridLayoutManager);
 
@@ -78,6 +75,7 @@ public class AllServicesActivity extends AppCompatActivity {
             protected void populateViewHolder(ServicesViewHolder servicesViewHolder, final ServicePojo serModel, int position) {
 
                 final String user_id = getRef(position).getKey();
+                final String title = serModel.getName();
 
              //   servicesViewHolder.setDisplayName("Lets Up");
                 servicesViewHolder.setDisplayName(serModel.getName());
@@ -94,6 +92,7 @@ public class AllServicesActivity extends AppCompatActivity {
 
                         Intent subsIntent = new Intent(AllServicesActivity.this,SubscribeActivity.class);
                         subsIntent.putExtra("user_id", user_id);
+                        subsIntent.putExtra("title", title);
 
                         Log.e("userid",user_id);
 
@@ -131,7 +130,7 @@ public class AllServicesActivity extends AppCompatActivity {
 
         public void setDisplayName(String name){
 
-            TextView userNameView = (TextView) mView.findViewById(R.id.service_single_name);
+            TextView userNameView = mView.findViewById(R.id.service_single_name);
             userNameView.setText(name);
 
         }
@@ -146,7 +145,7 @@ public class AllServicesActivity extends AppCompatActivity {
 
         public void setUserImage(String thumb_image, Context ctx){
 
-            CircleImageView userImageView = (CircleImageView) mView.findViewById(R.id.service_photo);
+            CircleImageView userImageView = mView.findViewById(R.id.service_photo);
 
             Picasso.with(ctx).load(thumb_image).placeholder(R.drawable.bg_card).into(userImageView);
 

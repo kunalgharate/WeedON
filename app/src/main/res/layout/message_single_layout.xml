@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_single_layout"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:weightSum="10">
+
+
+    <TextView
+        android:id="@+id/time_text_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout2"
+        android:text="00:00"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/chat_bgimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/linearLayout2"
+        android:layout_marginEnd="256dp"
+        android:layout_marginRight="256dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/arrow_bg1" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/rounded_corner"
+        android:orientation="horizontal">
+
+
+        <com.example.kunalgharate.weedon.CoustomTextView
+            android:id="@+id/message_text_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/linearLayout2"
+            android:layout_alignStart="@+id/linearLayout2"
+            android:layout_alignTop="@+id/linearLayout2"
+            android:layout_weight="1"
+            android:contentDescription="@string/action_settings"
+            android:padding="10dp"
+            android:text="Message Text"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/message_image_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:contentDescription="TODO"
+        android:scaleType="fitCenter" />
+
+
+</RelativeLayout>

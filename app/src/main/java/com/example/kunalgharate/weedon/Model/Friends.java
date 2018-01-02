@@ -1,4 +1,4 @@
-package com.example.kunalgharate.weedon;
+package com.example.kunalgharate.weedon.Model;
 
 /**
  * Created by Kunal Gharate on 16-12-2017.
@@ -6,21 +6,21 @@ package com.example.kunalgharate.weedon;
 
 public class Friends {
 
-    public String date;
+    public String my_string;
 
     public Friends(){
 
     }
 
     public Friends(String date) {
-        this.date = date;
+        this.my_string = my_string;
     }
 
     public String getDate() {
-        return date;
+        return my_string;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.my_string = date;
     }
 }

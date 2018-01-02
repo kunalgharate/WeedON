@@ -30,14 +30,26 @@
             android:contentDescription="@string/desc_firebase_lockup"
             android:src="@drawable/ic_stat_name" />
 
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/country_code"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:hint="+91"
+                android:inputType="phone"
+                android:theme="@style/ThemeOverlay.MyLightEditText" />
+
             <EditText
                 android:id="@+id/field_phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:focusable="true"
                 android:hint="@string/hint_phone_number"
                 android:inputType="phone"
                 android:theme="@style/ThemeOverlay.MyLightEditText" />
@@ -108,14 +120,6 @@
                 android:orientation="horizontal"
                 android:weightSum="2.0">
 
-                <!--  <EditText
-                    android:id="@+id/field_phone_number"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:hint="@string/hint_phone_number"
-                    android:inputType="phone"
-                    android:theme="@style/ThemeOverlay.MyLightEditText" />-->
 
                 <EditText
                     android:id="@+id/field_verification_code"

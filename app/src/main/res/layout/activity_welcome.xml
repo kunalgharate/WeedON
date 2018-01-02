@@ -6,16 +6,25 @@
     android:layout_height="match_parent"
     tools:context="com.example.kunalgharate.weedon.WelcomeActivity">
 
-    <TextView
+    <com.example.kunalgharate.weedon.CoustomTextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="212dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical|center_horizontal|center"
-        android:text="Welcome To WeedON"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@android:dimen/app_icon_size" />
+        android:text="Welcome to WeedOn"
+        android:textColor="@color/darkColor"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="96dp"
+        app:srcCompat="@drawable/logo" />
 </RelativeLayout>

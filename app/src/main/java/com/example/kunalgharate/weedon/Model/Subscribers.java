@@ -1,4 +1,4 @@
-package com.example.kunalgharate.weedon;
+package com.example.kunalgharate.weedon.Model;
 
 /**
  * Created by Kunal Gharate on 15-12-2017.
